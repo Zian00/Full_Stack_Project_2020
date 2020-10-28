@@ -1,0 +1,33 @@
+{
+  "name": "backend",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www",
+    "resetBasicTable": "node ./bin/resetBasicTable.js",
+    "resetAdvanceTable": "node ./bin/resetAdvancedTable.js"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "dotenv": "^8.2.0",
+    "express": "~4.16.1",
+    "http-errors": "^1.8.0",
+    "jade": "~1.11.0",
+    "launch": "0.0.1",
+    "moment": "^2.27.0",
+    "morgan": "~1.9.1",
+    "nodemon": "^2.0.3",
+    "pg": "^8.0.3"
+  },
+  "description": "1. Basic/Advanced Insert API\r 2. Basic/Advanced Query API",
+  "main": "backend.js",
+  "bin": {
+    "backend1": "resetBasicTable.js",
+    "backend2": "resetAdvanceTable.js",
+    "backend3": "resetAdvancedTable.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
