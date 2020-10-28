@@ -1,0 +1,977 @@
+// --------- Basic requests -----------
+// test requests - jeremiah
+###
+POST http://localhost:3000/basic/insert HTTP/1.1
+Content-Type: application/json
+
+{
+    "data" : [
+        {
+            "performanceId" : 1000000001,
+            "festivalId" : 1100000001,
+            "startTime" : "1000",
+            "endTime" : "1100"
+        },
+        {
+            "performanceId" : 1000000002,
+            "festivalId" : 1100000001,
+            "startTime" : "1000",
+            "endTime" : "1100"
+        },
+        {
+            "performanceId" : 1000000003,
+            "festivalId" : 1100000001,
+            "startTime" : "1030",
+            "endTime" : "1130"
+        },
+        {
+            "performanceId" : 1000000004,
+            "festivalId" : 1100000002,
+            "startTime" : "1000",
+            "endTime" : "1100"
+        },
+        {
+            "performanceId" : 1000000005,
+            "festivalId" : 1100000002,
+            "startTime" : "1100",
+            "endTime" : "1200"
+        },
+        {
+            "performanceId" : 1000000006,
+            "festivalId" : 1100000002,
+            "startTime" : "1200",
+            "endTime" : "1300"
+        },
+        {
+            "performanceId" : 1000000007,
+            "festivalId" : 1100000002,
+            "startTime" : "1030",
+            "endTime" : "1230"
+        },
+        {
+            "performanceId" : 1000000008,
+            "festivalId" : 1100000003,
+            "startTime" : "1000",
+            "endTime" : "1100"
+        },
+        {
+            "performanceId" : 1000000009,
+            "festivalId" : 1100000003,
+            "startTime" : "1100",
+            "endTime" : "1200"
+        },
+        {
+            "performanceId" : 1000000010,
+            "festivalId" : 1100000003,
+            "startTime" : "1200",
+            "endTime" : "1300"
+        },
+        {
+            "performanceId" : 1000000011,
+            "festivalId" : 1100000003,
+            "startTime" : "1030",
+            "endTime" : "1230"
+        },
+        {
+            "performanceId" : 1000000012,
+            "festivalId" : 1100000003,
+            "startTime" : "1130",
+            "endTime" : "1300"
+        },
+        {
+            "performanceId" : 1000000013,
+            "festivalId" : 1100000004,
+            "startTime" : "1000",
+            "endTime" : "1100"
+        },
+        {
+            "performanceId" : 1000000014,
+            "festivalId" : 1100000004,
+            "startTime" : "1100",
+            "endTime" : "1200"
+        },
+        {
+            "performanceId" : 1000000015,
+            "festivalId" : 1100000004,
+            "startTime" : "1200",
+            "endTime" : "1300"
+        },
+        {
+            "performanceId" : 1000000016,
+            "festivalId" : 1100000004,
+            "startTime" : "1030",
+            "endTime" : "1230"
+        },
+        {
+            "performanceId" : 1000000017,
+            "festivalId" : 1100000004,
+            "startTime" : "1130",
+            "endTime" : "1330"
+        },
+        {
+            "performanceId" : 1000000018,
+            "festivalId" : 1100000004,
+            "startTime" : "0900",
+            "endTime" : "1200"
+        }
+    ]
+}
+
+// basic insert
+// expected output:
+// {
+//   "result": "success"
+// }
+
+###
+Get http://localhost:3000/reset/basic HTTP/1.1
+Content-Type: application/json
+
+// reset basic table
+// expected output:
+# {
+#   "success": true
+# }
+
+###
+Get http://localhost:3000/basic/data?festivalId=1100000001 HTTP/1.1
+Content-Type: application/json
+
+// basic data
+// expected output:
+#  [
+#   {
+#    "id" : 1
+#    "performanceId": "1000000001",
+#    "festivalId": "1100000001",
+#    "startTime": "1000",
+#    "endTime": "1100",
+#    "no_of_rows": "3"
+#  },
+#  ...
+# ]
+
+
+
+###
+Get http://localhost:3000/basic/data?festivalId=1100000004&startTime__gt=0900&page=1 HTTP/1.1
+Content-Type: application/json
+
+// basic data with pagination, festivalId = 1100000004, startTime >= 0900
+// expected output:
+#  [
+#   {
+#    "id" : 18
+#    "performanceId" : "10000000018",
+#    "festivalId" : "1100000004",
+#    "startTime" : "0900",
+#    "endTime" : "1200",
+#    "no_of_rows": "6"
+#  }
+# ]
+
+###
+Get http://localhost:3000/basic/data?festivalId=1100000000 HTTP/1.1
+Content-Type: application/json
+// basic data with non-existent festivalId
+// expected output:
+# {
+#   "error": "No Result",
+#   "code": 404
+# }
+// Explanation: input entered has no results.
+
+###
+Get http://localhost:3000/basic/result?festivalId=1100000001 HTTP/1.1
+Content-Type: application/json
+// basic result
+// expected output:
+# {
+#     "result" : [
+#         {
+#             "performanceId" : 1000000001,
+#             "startTime": "1000",
+#             "endTime": "1100"
+#         }
+#     ]
+# }
+
+###
+Get http://localhost:3000/basic/result?festivalId=aaaaaa HTTP/1.1
+Content-Type: application/json
+// input NaN for basic result
+// expected output:
+# {
+#   "error": "input entered is not number",
+#   "code": 400
+# }
+// Explanation: input entered is not a number, but the festivalIds can only be 10-digit numbers.
+
+###
+Get http://localhost:3000/basic/result?festivalId=10 HTTP/1.1
+Content-Type: application/json
+// input not 10-digit number for basic result
+// expected output:
+# {
+#   "error": "input entered is not 10 digits",
+#   "code": 400
+# }
+// Explanation: input entered is not a 10-digit number, but the festivalIds can only be 10-digit numbers.
+
+###
+Get http://localhost:3000/basic/result?festivalId=1100000000 HTTP/1.1
+Content-Type: application/json
+// input entered has no results for basic result
+// expected output:
+# {
+#   "error": "No Result",
+#   "code": 404
+# }
+// Explanation: input entered has no results.
+
+###
+Get http://localhost:3000/basic/result?festivalId= HTTP/1.1
+Content-Type: application/json
+// basic result with no festivalId
+// expected output:
+# {
+#   "error": "Empty input entered",
+#   "code": 400
+# }
+// Explanation: no input entered.
+
+###
+Get http://localhost:3000/basic/result? HTTP/1.1
+Content-Type: application/json
+// basic result with no fields entered
+# {
+#   "error": "Missing field",
+#   "code": 400
+# }
+// Explanation: no fields entered.
+
+
+// ----------- Advance requests -------------
+###
+POST http://localhost:3000/advance/insert HTTP/1.1
+Content-Type: application/json
+
+{
+    "data" : [
+        {
+            "performanceId" : 1000000001,
+            "festivalId" : 1100000001,
+            "startTime" : "1000",
+            "endTime" : "1100",
+            "popularity" : 1
+        },
+        {
+            "performanceId" : 1000000002,
+            "festivalId" : 1100000001,
+            "startTime" : "1000",
+            "endTime" : "1100",
+            "popularity" : 1
+        },
+        {
+            "performanceId" : 1000000003,
+            "festivalId" : 1100000001,
+            "startTime" : "1030",
+            "endTime" : "1130",
+            "popularity" : 10
+        },
+        {
+            "performanceId" : 1000000004,
+            "festivalId" : 1100000002,
+            "startTime" : "1000",
+            "endTime" : "1100",
+            "popularity" : 1
+        },
+        {
+            "performanceId" : 1000000005,
+            "festivalId" : 1100000002,
+            "startTime" : "1100",
+            "endTime" : "1200",
+            "popularity" : 1
+        },
+        {
+            "performanceId" : 1000000006,
+            "festivalId" : 1100000002,
+            "startTime" : "1200",
+            "endTime" : "1300",
+            "popularity" : 1
+        },
+        {
+            "performanceId" : 1000000007,
+            "festivalId" : 1100000002,
+            "startTime" : "1030",
+            "endTime" : "1230",
+            "popularity" : 3
+        },
+        {
+            "performanceId" : 1000000008,
+            "festivalId" : 1100000003,
+            "startTime" : "1000",
+            "endTime" : "1100",
+            "popularity" : 1
+        },
+        {
+            "performanceId" : 1000000009,
+            "festivalId" : 1100000003,
+            "startTime" : "1100",
+            "endTime" : "1200",
+            "popularity" : 1
+        },
+        {
+            "performanceId" : 1000000010,
+            "festivalId" : 1100000003,
+            "startTime" : "1200",
+            "endTime" : "1300",
+            "popularity" : 1
+        },
+        {
+            "performanceId" : 1000000011,
+            "festivalId" : 1100000003,
+            "startTime" : "1030",
+            "endTime" : "1230",
+            "popularity" : 1
+        },
+        {
+            "performanceId" : 1000000012,
+            "festivalId" : 1100000003,
+            "startTime" : "1130",
+            "endTime" : "1300",
+            "popularity" : 3
+        },
+        {
+            "performanceId" : 1000000013,
+            "festivalId" : 1100000004,
+            "startTime" : "1000",
+            "endTime" : "1100",
+            "popularity" : 1
+        },
+        {
+            "performanceId" : 1000000014,
+            "festivalId" : 1100000004,
+            "startTime" : "1100",
+            "endTime" : "1200",
+            "popularity" : 1
+        },
+        {
+            "performanceId" : 1000000015,
+            "festivalId" : 1100000004,
+            "startTime" : "1200",
+            "endTime" : "1300",
+            "popularity" : 2
+        },
+        {
+            "performanceId" : 1000000016,
+            "festivalId" : 1100000004,
+            "startTime" : "1030",
+            "endTime" : "1230",
+            "popularity" : 3
+        },
+        {
+            "performanceId" : 1000000017,
+            "festivalId" : 1100000004,
+            "startTime" : "1130",
+            "endTime" : "1330",
+            "popularity" : 4
+        },
+        {
+            "performanceId" : 1000000018,
+            "festivalId" : 1100000004,
+            "startTime" : "0900",
+            "endTime" : "1200",
+            "popularity" : 5
+        }
+    ]
+}
+
+// advance insert
+// expected output:
+// {
+//   "result": "success"
+// }
+
+###
+Get http://localhost:3000/reset/advance HTTP/1.1
+Content-Type: application/json
+// reset advance table
+// expected output:
+# {
+#   "success": true
+# }
+
+###
+Get http://localhost:3000/advance/data HTTP/1.1
+Content-Type: application/json
+// advance data
+// expected output:
+#  [
+#   {
+#    "id" : 1
+#    "performanceId": "10000000001",
+#    "festivalId": "1100000001",
+#    "startTime": "1000",
+#    "endTime": "1100",
+#    "popularity": 1,
+#    "no_of_rows": "5"
+#  },
+#  ...
+# ]
+
+###
+Get http://localhost:3000/advance/data?festivalId=1100000001 HTTP/1.1
+Content-Type: application/json
+// advance data where festivalId = 1100000001
+// expected output:
+#  [
+#   {
+#    "id" : 1
+#    "performanceId": "10000000001",
+#    "festivalId": "1100000001",
+#    "startTime": "1000",
+#    "endTime": "1100",
+#    "popularity": 1,
+#    "no_of_rows": "3"
+#  },
+#  ...
+# ]
+
+###
+Get http://localhost:3000/advance/data?startTime__gt=0900 HTTP/1.1
+Content-Type: application/json
+// advance data where endTime < 1130
+// expected output:
+#  [
+#   {
+#    "id" : 1
+#    "performanceId": "10000000001",
+#    "festivalId": "1100000001",
+#    "startTime": "1000",
+#    "endTime": "1100",
+#    "popularity": 1,
+#    "no_of_rows": "18"
+#  },
+#  ...
+# ]
+
+###
+Get http://localhost:3000/advance/data?endTime__lt=1130 HTTP/1.1
+Content-Type: application/json
+// advance data where endTime < 1130
+// expected output:
+#  [
+#   {
+#    "id" : 1
+#    "performanceId": "10000000001",
+#    "festivalId": "1100000001",
+#    "startTime": "1000",
+#    "endTime": "1100",
+#    "popularity": 1,
+#    "no_of_rows": "18"
+#  },
+#  ...
+# ]
+
+###
+Get http://localhost:3000/advance/data?festivalId=1100000001&startTime_gt=0900&endTime__lt=1130 HTTP/1.1
+Content-Type: application/json
+// advance data where festivalId = 1100000001, startTime > 0900 and endTime < 1130
+// expected output:
+#  [
+#   {
+#    "id" : 1
+#    "performanceId": "10000000001",
+#    "festivalId": "1100000001",
+#    "startTime": "1000",
+#    "endTime": "1100",
+#    "popularity": 1,
+#    "no_of_rows": "2"
+#  },
+#  ...
+# ]
+
+###
+Get http://localhost:3000/advance/data?festivalId=1100000000 HTTP/1.1
+Content-Type: application/json
+// advance data with non-existent festivalId
+// expected output:
+# {
+#   "error": "No Result",
+#   "code": 404
+# }
+// Explanation: input entered has no results.
+
+
+###
+Get http://localhost:3000/advance/result?festivalId=1100000003 HTTP/1.1
+Content-Type: application/json
+// advance result where festivalId = 1100000003
+// expected output:
+# {
+#     "result": [
+#         {
+#             "performanceId": 1000000008,
+#             "startTime": "1000",
+#             "endTime": "1100",
+#             "popularity": 1
+#         },
+#         ...
+#     ]
+# }
+
+###
+Get http://localhost:3000/advance/result?festivalId=aaaaaa HTTP/1.1
+Content-Type: application/json
+// input NaN for advance result
+// expected output:
+# {
+#   "error": "input entered is not number",
+#   "code": 400
+# }
+// Explanation: input entered is not a number, but the festivalIds can only be 10-digit numbers.
+
+###
+Get http://localhost:3000/advance/result?festivalId=10 HTTP/1.1
+Content-Type: application/json
+// input not 10-digit number for advance result
+// expected output:
+# {
+#   "error": "input entered is not 10 digits",
+#   "code": 400
+# }
+// Explanation: input entered is not a 10-digit number, but the festivalIds can only be 10-digit numbers.
+
+###
+Get http://localhost:3000/advance/result?festivalId=1100000000 HTTP/1.1
+Content-Type: application/json
+// input entered has no results for advance result
+// expected output:
+# {
+#   "error": "No Result",
+#   "code": 404
+# }
+// Explanation: input entered has no results.
+
+###
+Get http://localhost:3000/advance/result?festivalId= HTTP/1.1
+Content-Type: application/json
+// advance result with no festivalId
+// expected output:
+# {
+#   "error": "Empty input entered",
+#   "code": 400
+# }
+// Explanation: no input entered.
+
+###
+Get http://localhost:3000/advance/result? HTTP/1.1
+Content-Type: application/json
+// advance result with no fields entered
+# {
+#   "error": "Missing field",
+#   "code": 400
+# }
+// Explanation: no fields entered.
+
+
+
+// --------------- advanced features ---------------
+
+###
+POST http://localhost:3000/advanced/insert HTTP/1.1
+Content-Type: application/json
+
+{
+    "data" : [
+        {
+            "performanceId" : 1000000001,
+            "festivalId" : 1100000001,
+            "startTimeDate" : "2020/07/01 10:00",
+            "endTimeDate" : "2020/07/01 11:00",
+            "popularity" : 1
+        },
+        {
+            "performanceId" : 1000000002,
+            "festivalId" : 1100000001,
+            "startTimeDate" : "2020/07/01 23:00",
+            "endTimeDate" : "2020/07/02 01:00",
+            "popularity" : 1
+        },
+        {
+            "performanceId" : 1000000003,
+            "festivalId" : 1100000001,
+            "startTimeDate" : "2020/07/01 10:30",
+            "endTimeDate" : "2020/07/01 11:30",
+            "popularity" : 10
+        },
+        {
+            "performanceId" : 1000000004,
+            "festivalId" : 1100000002,
+            "startTimeDate" : "2020/07/01 10:00",
+            "endTimeDate" : "2020/07/01 11:00",
+            "popularity" : 1
+        },
+        {
+            "performanceId" : 1000000005,
+            "festivalId" : 1100000002,
+            "startTimeDate" : "2020/07/01 11:00",
+            "endTimeDate" : "2020/07/01 12:00",
+            "popularity" : 1
+        },
+        {
+            "performanceId" : 1000000006,
+            "festivalId" : 1100000002,
+            "startTimeDate" : "2020/07/01 12:00",
+            "endTimeDate" : "2020/07/01 13:00",
+            "popularity" : 1
+        },
+        {
+            "performanceId" : 1000000007,
+            "festivalId" : 1100000002,
+            "startTimeDate" : "2020/07/01 10:30",
+            "endTimeDate" : "2020/07/01 12:30",
+            "popularity" : 3
+        },
+        {
+            "performanceId" : 1000000008,
+            "festivalId" : 1100000003,
+            "startTimeDate" : "2020/07/01 10:00",
+            "endTimeDate" : "2020/07/01 11:00",
+            "popularity" : 1
+        },
+        {
+            "performanceId" : 1000000009,
+            "festivalId" : 1100000003,
+            "startTimeDate" : "2020/07/01 11:00",
+            "endTimeDate" : "2020/07/01 12:00",
+            "popularity" : 1
+        },
+        {
+            "performanceId" : 1000000010,
+            "festivalId" : 1100000003,
+            "startTimeDate" : "2020/07/01 12:00",
+            "endTimeDate" : "2020/07/01 13:00",
+            "popularity" : 1
+        },
+        {
+            "performanceId" : 1000000011,
+            "festivalId" : 1100000003,
+            "startTimeDate" : "2020/07/01 10:30",
+            "endTimeDate" : "2020/07/01 12:30",
+            "popularity" : 1
+        },
+        {
+            "performanceId" : 1000000012,
+            "festivalId" : 1100000003,
+            "startTimeDate" : "2020/07/01 11:30",
+            "endTimeDate" : "2020/07/01 13:00",
+            "popularity" : 3
+        },
+        {
+            "performanceId" : 1000000013,
+            "festivalId" : 1100000004,
+            "startTimeDate" : "2020/07/01 10:00",
+            "endTimeDate" : "2020/07/01 11:00",
+            "popularity" : 1
+        },
+        {
+            "performanceId" : 1000000014,
+            "festivalId" : 1100000004,
+            "startTimeDate" : "2020/07/01 11:00",
+            "endTimeDate" : "2020/07/01 12:00",
+            "popularity" : 1
+        },
+        {
+            "performanceId" : 1000000015,
+            "festivalId" : 1100000004,
+            "startTimeDate" : "2020/07/01 12:00",
+            "endTimeDate" : "2020/07/01 13:00",
+            "popularity" : 2
+        },
+        {
+            "performanceId" : 1000000016,
+            "festivalId" : 1100000004,
+            "startTimeDate" : "2020/07/01 10:30",
+            "endTimeDate" : "2020/07/01 12:30",
+            "popularity" : 3
+        },
+        {
+            "performanceId" : 1000000017,
+            "festivalId" : 1100000004,
+            "startTimeDate" : "2020/07/01 11:30",
+            "endTimeDate" : "2020/07/01 13:30",
+            "popularity" : 4
+        },
+        {
+            "performanceId" : 1000000018,
+            "festivalId" : 1100000004,
+            "startTimeDate" : "2020/07/01 09:00",
+            "endTimeDate" : "2020/07/01 12:00",
+            "popularity" : 5
+        }
+    ]
+}
+// advanced features insert
+// expected output:
+// {
+//   "result": "success"
+// }
+
+###
+Get http://localhost:3000/reset/advanced HTTP/1.1
+Content-Type: application/json
+// reset advanced features table
+// expected output:
+# {
+#   "success": true
+# }
+
+###
+Get http://localhost:3000/advanced/data? HTTP/1.1
+Content-Type: application/json
+// advanced features data
+    # [
+    #     {
+    #         "id": 1,
+    #         "performanceId" : "1000000001",
+    #         "festivalId" : "1100000001",
+    #         "startTimeDate" : "2020/07/01 10:00",
+    #         "endTimeDate" : "2020/07/01 11:00",
+    #         "popularity" : 1,
+    #         "no_of_rows": "18"
+    #     },
+    #      ...
+    # ]
+
+###
+Get http://localhost:3000/advanced/data?festivalId=1100000001 HTTP/1.1
+Content-Type: application/json
+// advanced features data where festivalId=1100000001
+    # [
+    #     {
+    #         "id": 1,
+    #         "performanceId" : "1000000001",
+    #         "festivalId" : "1100000001",
+    #         "startTimeDate" : "2020/07/01 10:00",
+    #         "endTimeDate" : "2020/07/01 11:00",
+    #         "popularity" : 1,
+    #         "no_of_rows": "3"
+    #     },
+    #      ...
+    # ]
+
+###
+Get http://localhost:3000/advanced/data?startTimeDate__gt=2020/07/01 11:00 HTTP/1.1
+Content-Type: application/json
+// advance data where startTimeDate >= 2020/07/01 11:00
+// expected output:
+    # [
+    #     {
+    #         "id": 2,
+    #         "performanceId" : "1000000002",
+    #         "festivalId" : "1100000001",
+    #         "startTimeDate" : "2020/07/01 23:00",
+    #         "endTimeDate" : "2020/07/02 01:00",
+    #         "popularity" : 1,
+    #         "no_of_rows": "9"
+    #     },
+    #      ...
+    # ]
+#  ...
+# ]
+
+###
+Get http://localhost:3000/advanced/data?endTimeDate__lt=2020/07/01 13:00 HTTP/1.1
+Content-Type: application/json
+// advance data where endTimeDate < 2020/07/01 13:00
+// expected output:
+    # [
+    #     {
+    #         "id": 1,
+    #         "performanceId" : "1000000001",
+    #         "festivalId" : "1100000001",
+    #         "startTimeDate" : "2020/07/01 10:00",
+    #         "endTimeDate" : "2020/07/01 11:00",
+    #         "popularity" : 1,
+    #         "no_of_rows": "12"
+    #     },
+    #      ...
+    # ]
+
+###
+Get http://localhost:3000/advanced/data?festivalId=1100000001&startTimeDate_gt=2020/07/01 10:00&endTimeDate__lt=2020/07/01 13:00 HTTP/1.1
+Content-Type: application/json
+// advance data where festivalId = 1100000001, startTimeDate >= 2020/07/01 10:00 and endTimeDate < 2020/07/01 13:00
+// expected output:
+    # [
+    #     {
+    #         "id": 1,
+    #         "performanceId" : "1000000001",
+    #         "festivalId" : "1100000001",
+    #         "startTimeDate" : "2020/07/01 10:00",
+    #         "endTimeDate" : "2020/07/01 11:00",
+    #         "popularity" : 1,
+    #         "no_of_rows": "2"
+    #     },
+    #      ...
+    # ]
+
+###
+Get http://localhost:3000/advanced/data?festivalId=1100000000 HTTP/1.1
+Content-Type: application/json
+// advanced features data with non-existent festivalId
+// expected output:
+# {
+#   "error": "No Result",
+#   "code": 404
+# }
+// Explanation: input entered has no results.
+
+###
+Get http://localhost:3000/advanced/basicResult?festivalId=1100000002 HTTP/1.1
+Content-Type: application/json
+// advanced features basic result where festivalId = 1100000002
+# {
+#     "result": [
+#         {
+#             "performanceId": 1000000004,
+#             "startTimeDate": "2020/07/01 10:00",
+#             "endTimeDate": "2020/07/01 11:00",
+#         },
+#         ...
+#     ]
+# }
+
+
+
+###
+Get http://localhost:3000/advanced/basicResult?festivalId=aaaaaa HTTP/1.1
+Content-Type: application/json
+// input NaN for advanced features basic result
+// expected output:
+# {
+#   "error": "input entered is not number",
+#   "code": 400
+# }
+// Explanation: input entered is not a number, but the festivalIds can only be 10-digit numbers.
+
+###
+Get http://localhost:3000/advanced/basicResult?festivalId=10 HTTP/1.1
+Content-Type: application/json
+// input not 10-digit number for advanced features basic result
+// expected output:
+# {
+#   "error": "input entered is not 10 digits",
+#   "code": 400
+# }
+// Explanation: input entered is not a 10-digit number, but the festivalIds can only be 10-digit numbers.
+
+###
+Get http://localhost:3000/advanced/basicResult?festivalId=1100000000 HTTP/1.1
+Content-Type: application/json
+// input entered has no results for advanced features basic result
+// expected output:
+# {
+#   "error": "No Result",
+#   "code": 404
+# }
+// Explanation: input entered has no results.
+
+###
+Get http://localhost:3000/advanced/basicResult?festivalId= HTTP/1.1
+Content-Type: application/json
+// advanced features basic result with no festivalId
+// expected output:
+# {
+#   "error": "Empty input entered",
+#   "code": 400
+# }
+// Explanation: no input entered.
+
+###
+Get http://localhost:3000/advanced/basicResult? HTTP/1.1
+Content-Type: application/json
+// advanced features basic result with no fields entered
+# {
+#   "error": "Missing field",
+#   "code": 400
+# }
+// Explanation: no fields entered.
+
+
+###
+Get http://localhost:3000/advanced/advanceResult?festivalId=1100000001 HTTP/1.1
+Content-Type: application/json
+// advanced features advance result where festivalId = 1100000001
+# {
+#     "result": [
+#         {
+#             "performanceId": 1000000003,
+#             "startTimeDate": "2020/07/01 10:30",
+#             "endTimeDate": "2020/07/01 11:30",
+#             "popularity": 10
+#         },
+#         {
+#             "performanceId": 1000000002,
+#             "startTimeDate": "2020/07/01 23:00",
+#             "endTimeDate": "2020/07/02 01:00",
+#             "popularity": 1
+#         }
+#     ]
+#  }
+
+###
+Get http://localhost:3000/advanced/advanceResult?festivalId=aaaaaa HTTP/1.1
+Content-Type: application/json
+// input NaN for advanced features advance result
+// expected output:
+# {
+#   "error": "input entered is not number",
+#   "code": 400
+# }
+// Explanation: input entered is not a number, but the festivalIds can only be 10-digit numbers.
+
+###
+Get http://localhost:3000/advanced/advanceResult?festivalId=10 HTTP/1.1
+Content-Type: application/json
+// input not 10-digit number for advanced features advance result
+// expected output:
+# {
+#   "error": "input entered is not 10 digits",
+#   "code": 400
+# }
+// Explanation: input entered is not a 10-digit number, but the festivalIds can only be 10-digit numbers.
+
+###
+Get http://localhost:3000/advanced/advanceResult?festivalId=1100000000 HTTP/1.1
+Content-Type: application/json
+// input entered has no results for advanced features advance result
+// expected output:
+# {
+#   "error": "No Result",
+#   "code": 404
+# }
+// Explanation: input entered has no results.
+
+###
+Get http://localhost:3000/advanced/advanceResult?festivalId= HTTP/1.1
+Content-Type: application/json
+// advanced features advance result with no festivalId
+// expected output:
+# {
+#   "error": "Empty input entered",
+#   "code": 400
+# }
+// Explanation: no input entered.
+
+###
+Get http://localhost:3000/advanced/advanceResult? HTTP/1.1
+Content-Type: application/json
+// advanced features advance result with no fields entered
+# {
+#   "error": "Missing field",
+#   "code": 400
+# }
+// Explanation: no fields entered.

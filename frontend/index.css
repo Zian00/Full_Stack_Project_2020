@@ -1,0 +1,35 @@
+body {
+    /* background: linear-gradient(45deg,#0033cc, #ff99cc); */
+    background: linear-gradient(45deg, #22c1c3, #fdbb2d);
+}
+
+.card {
+    background-color: transparent;
+    border: none;
+}
+
+.darkmode {
+    /* --clr-light: #fdffc4;
+    --clr-dark: #00332a;
+    --clr-primary: #202302;
+    --clr-secondary: #00100d;
+    --clr-accent: #ff7750;
+    --foreground: var(--clr-light);
+    --background: var(--clr-dark); */
+    background: #353636
+}
+
+.dark-mode-toggle {
+    position: absolute;
+    z-index: 100;
+    top: 1em;
+    right: 1em;
+    color: var(--foreground);
+    border: 2px solid currentColor;
+    padding: 4px;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 30px;
+    height: 30px;
+}
