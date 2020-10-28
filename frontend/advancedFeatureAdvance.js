@@ -8,16 +8,16 @@ const advancedDataQuery = {
 
 
 
-// const advancedDataUrl = "https://jibaboom-ggstudy.herokuapp.com/advanced/data";
-const advancedDataUrl = "http://localhost:3000/advance/data";
+const advancedDataUrl = "https://full-stack-project-2020.herokuapp.com/advanced/data";
+// const advancedDataUrl = "http://localhost:3000/advance/data";
 
 /* Advanced feature Advance Result*/
 const advancedResultQuery = {
     festivalId: null
 }
 
-// const advancedResultUrl = `https://jibaboom-ggstudy.herokuapp.com/advanced/advanceResult`;
-const advancedResultUrl = `http://localhost:3000/advance/result`;
+const advancedResultUrl = `https://full-stack-project-2020.herokuapp.com/advanced/advanceResult`;
+// const advancedResultUrl = `http://localhost:3000/advance/result`;
 
 function paginateAdvancedData(event) {
     const fn = $(this).attr("fn");

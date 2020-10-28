@@ -23,15 +23,15 @@ const advancedDataPaginationFunction = {
     }
 }
 
-// const advancedDataUrl = "https://jibaboom-ggstudy.herokuapp.com/advanced/data";
-const advancedDataUrl = "http://localhost:3000/advance/data";
+const advancedDataUrl = "https://full-stack-project-2020.herokuapp.com/advanced/data";
+// const advancedDataUrl = "http://localhost:3000/advance/data";
 
 const advancedResultQuery = {
     festivalId: null
 }
 
-// const advancedResultUrl = `https://jibaboom-ggstudy.herokuapp.com/advanced/basicResult`;
-const advancedResultUrl = `http://localhost:3000/advance/result`;
+const advancedResultUrl = `https://full-stack-project-2020.herokuapp.com/advanced/basicResult`;
+// const advancedResultUrl = `http://localhost:3000/advance/result`;
 
 // --------------------- Advanced Data ----------------------
 // printing the data in html
