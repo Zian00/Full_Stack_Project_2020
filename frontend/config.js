@@ -1,7 +1,7 @@
 const CONFIG = {
     API_BASE_URL: window.location.hostname === 'localhost'
         ? 'http://localhost:3000'
-        : 'https://festival-performance-backend.onrender.com' // Replace with your actual Render URL when you have it
+        : 'https://festival-performance-backend.onrender.com' // Your Render URL
 };
 
 // Make config available globally
