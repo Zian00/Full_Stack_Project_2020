@@ -6,6 +6,7 @@
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
     "initdb": "node ./bin/initDatabase.js",
+    "seed": "node ./bin/seedDatabase.js",
     "resetBasicTable": "node ./bin/resetBasicTable.js",
     "resetAdvanceTable": "node ./bin/resetAdvancedTable.js"
   },
