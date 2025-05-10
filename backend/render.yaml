@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: festival-performance-backend
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false # This will be set manually in Render dashboard
+
+databases:
+  - name: festival-performance-db
+    databaseName: festival_performance
+    user: festival_performance_user 

@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www",
+    "start": "node ./bin/www",
+    "dev": "nodemon ./bin/www",
+    "initdb": "node ./bin/initDatabase.js",
     "resetBasicTable": "node ./bin/resetBasicTable.js",
     "resetAdvanceTable": "node ./bin/resetAdvancedTable.js"
   },
@@ -18,7 +20,7 @@
     "launch": "0.0.1",
     "moment": "^2.27.0",
     "morgan": "~1.9.1",
-    "nodemon": "^2.0.3",
+    "nodemon": "^2.0.22",
     "pg": "^8.0.3"
   },
   "description": "1. Basic/Advanced Insert API\r 2. Basic/Advanced Query API",

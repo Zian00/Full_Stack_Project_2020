@@ -1,15 +1,26 @@
+require('dotenv').config();
 const { Client } = require('pg')
-const CONNECTION_STRING = "postgres://typfnjzp:dlU247YwgljyMtlSxIw5ObTmn-z3sVw6@john.db.elephantsql.com:5432/typfnjzp";
+
+// Use environment variable for connection string with a fallback for development
+const CONNECTION_STRING = process.env.DATABASE_URL;
 
 function connect() {
+    if (!CONNECTION_STRING) {
+        throw new Error('Database connection string is not configured. Please set DATABASE_URL environment variable.');
+    }
+    
     const client = new Client({
         connectionString: CONNECTION_STRING,
-    })
+        ssl: process.env.NODE_ENV === 'production' ? {
+            rejectUnauthorized: false
+        } : false
+    });
+    
     client.connect();
     return client;
 }
 
-// reset Baisc Table
+// reset Basic Table
 function resetBasicTable(callback) {
     const client = connect();
     const query = `

@@ -22,15 +22,17 @@ const basicDataPaginationFunction = {
     }
 }
 
-const basicDataUrl = "https://full-stack-project-2020.herokuapp.com/basic/data";
+// const basicDataUrl = "https://full-stack-project-2020.herokuapp.com/basic/data";
 // const basicDataUrl = "http://localhost:3000/basic/data";
+const basicDataUrl = `${CONFIG.API_BASE_URL}/basic/data`;
 
 const basicResultQuery = {
     festivalId: null
 }
 
-const basicResultUrl = `https://full-stack-project-2020.herokuapp.com/basic/result`;
+// const basicResultUrl = `https://full-stack-project-2020.herokuapp.com/basic/result`;
 // const basicResultUrl = `http://localhost:3000/basic/result`;
+const basicResultUrl = `${CONFIG.API_BASE_URL}/basic/result`;
 
 // printing the data in html
 function populateDataBasicTable(data) {
