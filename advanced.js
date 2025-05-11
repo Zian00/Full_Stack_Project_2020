@@ -9,6 +9,7 @@ const advancedDataQuery = {
 let advancedResultQuery = {
     festivalId: null
 }; // Initialize with required property
+
 const advancedDataPaginationFunction = {
     gotoFirstPage: function () {
         advancedDataQuery["page"] = 0;
