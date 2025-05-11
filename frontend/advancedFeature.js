@@ -26,7 +26,7 @@ const advancedDataPaginationFunction = {
 // const advancedDataUrl = "https://full-stack-project-2020.herokuapp.com/advanced/data";
 // const advancedDataUrl = "http://localhost:3000/advance/data";
 
-const advancedDataUrl = `${CONFIG.API_BASE_URL}/advance/data`;
+const advancedDataUrl = `${CONFIG.API_BASE_URL}/advanced/data`;
 
 const advancedResultQuery = {
     festivalId: null
@@ -52,7 +52,7 @@ function populateAdvancedDataTable(data) {
 }
 // getting arrays from backend
 function getAdvancedDataFromBackend(callback) {
-    $.get(`${CONFIG.API_BASE_URL}/advance/data`, advancedDataQuery)
+    $.get(`${CONFIG.API_BASE_URL}/advanced/data`, advancedDataQuery)
         .done((result) => callback(null, result))
         .fail((message) => callback(message, null));
 }
