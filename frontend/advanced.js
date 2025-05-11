@@ -129,11 +129,30 @@ function registerAdvancedDataPaginationForm() {
 function populateAdvancedResultTable(data) {
     console.log(data.result);
 
+    // Function to format time string (HHMM) to "HH:MM"
+    const formatTimeString = (timeStr) => {
+        if (!timeStr || timeStr.length < 4) return timeStr;
+        return `${timeStr.slice(0, 2)}:${timeStr.slice(2, 4)}`;
+    };
+
+    // Function to create a date string in the format "yyyy/MM/dd HH:mm"
+    const createDateTimeString = (timeStr) => {
+        if (!timeStr || timeStr.length < 4) return timeStr;
+        // Get current date as base (or you might want to use a specific date)
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+        const day = String(currentDate.getDate()).padStart(2, '0');
+        const formattedTime = formatTimeString(timeStr);
+        
+        return `${year}/${month}/${day} ${formattedTime}`;
+    };
+
     var resultTableHtml = data.result.map(({ performanceId, startTime, endTime, popularity }) => `
                      <tr>
                         <th scope="row">${performanceId}</th>
-                        <td>${startTime}</td>
-                        <td>${endTime}</td>
+                        <td>${createDateTimeString(startTime)}</td>
+                        <td>${createDateTimeString(endTime)}</td>
                         <td>${popularity}</td>
                      </tr>
      `);
