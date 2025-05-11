@@ -144,7 +144,7 @@ function populateAdvancedResultTable(data) {
 }
 
 function getAdvancedResultFromBackend(callback) {
-    $.get(`${CONFIG.API_BASE_URL}/advance/result`, advancedResultQuery)
+    $.get(`${CONFIG.API_BASE_URL}/advanced/basicResult`, advancedResultQuery)
         .done((result) => callback(null, result))
         .fail((message) => callback(message, null));
 }
