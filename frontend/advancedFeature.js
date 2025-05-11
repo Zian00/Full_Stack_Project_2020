@@ -131,15 +131,32 @@ function registerAdvancedDataPaginationForm() {
 // --------------------- Advanced Result ----------------------
 
 function populateAdvancedResultTable(data) {
-    console.log(data.result);
-
-    var resultTableHtml = data.result.map(({ performanceId, startTimeDate, endTimeDate }) => `
-                     <tr>
-                        <th scope="row">${performanceId}</th>
-                        <td>${startTimeDate}</td>
-                        <td>${endTimeDate}</td>
-                     </tr>
-     `);
+    console.log("Data received:", data);
+    console.log("Result array:", data.result);
+    
+    if (!data.result || data.result.length === 0) {
+        console.log("No results found or empty result array");
+        $("#advanced-result-tbody").html("<tr><td colspan='3'>No results found</td></tr>");
+        return;
+    }
+    
+    // Debug the first result item
+    console.log("First result item:", data.result[0]);
+    
+    var resultTableHtml = data.result.map((item) => {
+        console.log("Mapping item:", item);
+        return `
+            <tr>
+                <th scope="row">${item.performanceId}</th>
+                <td>${item.startTimeDate}</td>
+                <td>${item.endTimeDate}</td>
+            </tr>
+        `;
+    });
+    
+    console.log("Generated HTML:", resultTableHtml);
+    console.log("Target element exists:", $("#advanced-result-tbody").length > 0);
+    
     $("#advanced-result-tbody").html(resultTableHtml);
 }
 
