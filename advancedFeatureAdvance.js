@@ -6,7 +6,9 @@ const advancedDataQuery = {
     pageSize: 5
 }
 
-
+let advancedResultQuery = {
+    festivalId: null
+}; // Initialize with required property
 
 // const advancedDataUrl = "https://full-stack-project-2020.herokuapp.com/advanced/data";
 // const advancedDataUrl = "http://localhost:3000/advance/data";
@@ -126,6 +128,11 @@ function refreshAdvancedResultTable() {
 }
 
 function computeAdvancedResult() {
+    // Reset the query object with default values
+    advancedResultQuery = {
+        festivalId: null
+    };
+    
     $("#advanced-result-input-form input")
         .not(":input[type=submit]")
         .each((_, input) => {
