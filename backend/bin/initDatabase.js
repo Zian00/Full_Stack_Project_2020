@@ -6,15 +6,35 @@ const moment = require('moment');
 function generatePerformanceData(count = 50) {
     const performances = [];
     const festivalIds = ["1100000001", "1100000002", "1100000003"]; // Example festival IDs
+    const usedTimes = new Set(); // Track used time combinations
     
     for (let i = 0; i < count; i++) {
-        // Generate a random date within next 30 days
-        const startDate = moment().add(Math.floor(Math.random() * 30), 'days');
-        const endDate = moment(startDate).add(30 + Math.floor(Math.random() * 150), 'minutes');
-
-        // Format times in HHMM format
-        const starttime = startDate.format('HHmm');
-        const endtime = endDate.format('HHmm');
+        let startDate, endDate, starttime, endtime;
+        let timeSignature;
+        
+        // Keep generating times until we find a unique combination
+        do {
+            // Generate a random date within next 30 days
+            startDate = moment().add(Math.floor(Math.random() * 30), 'days');
+            
+            // Add random hours and minutes to make times more varied
+            startDate.add(Math.floor(Math.random() * 24), 'hours');
+            startDate.add(Math.floor(Math.random() * 60), 'minutes');
+            
+            // Generate end time with variable duration
+            endDate = moment(startDate).add(30 + Math.floor(Math.random() * 150), 'minutes');
+            
+            // Format times
+            starttime = startDate.format('HHmm');
+            endtime = endDate.format('HHmm');
+            
+            // Create a signature to check uniqueness
+            timeSignature = `${starttime}-${endtime}`;
+            
+        } while (usedTimes.has(timeSignature));
+        
+        // Add to used times set
+        usedTimes.add(timeSignature);
 
         // Format for advanced table (YYYY/MM/DD HH:mm)
         const startTimeDate = startDate.format('YYYY/MM/DD HH:mm');

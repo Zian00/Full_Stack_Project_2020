@@ -37,9 +37,8 @@ const basicResultUrl = `${CONFIG.API_BASE_URL}/basic/result`;
 // printing the data in html
 function populateDataBasicTable(data) {
     console.log(data);
-    // Skip the first element which contains metadata
-    const actualData = data.slice(1);
-    const dataTableHtml = actualData.map(({ performanceId, festivalId, startTime, endTime }) => `
+    // Don't skip any elements - all records contain the data we need
+    const dataTableHtml = data.map(({ performanceId, festivalId, startTime, endTime }) => `
                     <tr>
                         <th scope="row">${performanceId}</th>
                         <td>${festivalId}</td>
@@ -49,6 +48,7 @@ function populateDataBasicTable(data) {
     `);
     $("#basic-data-tbody").html(dataTableHtml);
 }
+
 // getting arrays from backend
 function getBasicDataFromBackend(callback) {
     $.get(basicDataUrl, basicDataQuery)
