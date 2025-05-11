@@ -3,7 +3,7 @@ const { Client } = require('pg');
 const moment = require('moment');
 
 // Helper function to generate random performance data
-function generatePerformanceData(count = 20) {
+function generatePerformanceData(count = 50) {
     const performances = [];
     const festivalIds = [1234567890, 9876543210]; // Example festival IDs
     
@@ -80,7 +80,7 @@ async function initializeDatabase() {
         console.log('Created advanced performance table');
 
         // Generate and insert dummy data
-        const performances = generatePerformanceData(20);
+        const performances = generatePerformanceData(50);
         
         // Insert into basic performance table
         for (const perf of performances) {
