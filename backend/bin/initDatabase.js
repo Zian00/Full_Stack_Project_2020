@@ -5,21 +5,28 @@ const moment = require('moment');
 // Helper function to generate random performance data
 function generatePerformanceData(count = 50) {
     const performances = [];
-    const festivalIds = [1234567890, 9876543210]; // Example festival IDs
+    const festivalIds = ["1100000001", "1100000002", "1100000003"]; // Example festival IDs
     
     for (let i = 0; i < count; i++) {
         // Generate a random date within next 30 days
         const startDate = moment().add(Math.floor(Math.random() * 30), 'days');
-        const startTime = startDate.format('YYYY-MM-DDTHH:mm:ss.SSSZ');
-        // Performance duration between 30 mins to 3 hours
-        const endTime = moment(startDate).add(30 + Math.floor(Math.random() * 150), 'minutes')
-            .format('YYYY-MM-DDTHH:mm:ss.SSSZ');
+        const endDate = moment(startDate).add(30 + Math.floor(Math.random() * 150), 'minutes');
+
+        // Format times in HHMM format
+        const starttime = startDate.format('HHmm');
+        const endtime = endDate.format('HHmm');
+
+        // Format for advanced table (YYYY/MM/DD HH:mm)
+        const startTimeDate = startDate.format('YYYY/MM/DD HH:mm');
+        const endTimeDate = endDate.format('YYYY/MM/DD HH:mm');
 
         performances.push({
-            performanceId: 1000000000 + i, // 10-digit performance IDs
-            festivalId: festivalIds[Math.floor(Math.random() * festivalIds.length)],
-            startTime,
-            endTime,
+            performanceid: (1000000000 + i).toString(), // 10-digit performance ID as string
+            festivalid: festivalIds[Math.floor(Math.random() * festivalIds.length)],
+            starttime,
+            endtime,
+            startTimeDate,
+            endTimeDate,
             popularity: Math.floor(Math.random() * 100) + 1 // 1-100 popularity score
         });
     }
@@ -87,7 +94,7 @@ async function initializeDatabase() {
             await client.query(
                 `INSERT INTO performance ("performanceId", "festivalId", "startTime", "endTime")
                  VALUES ($1, $2, $3, $4)`,
-                [perf.performanceId, perf.festivalId, perf.startTime, perf.endTime]
+                [perf.performanceid, perf.festivalid, perf.starttime, perf.endtime]
             );
         }
         console.log('Inserted data into performance table');
@@ -98,7 +105,7 @@ async function initializeDatabase() {
                 `INSERT INTO "performanceWithPopularity" 
                  ("performanceId", "festivalId", "startTime", "endTime", "popularity")
                  VALUES ($1, $2, $3, $4, $5)`,
-                [perf.performanceId, perf.festivalId, perf.startTime, perf.endTime, perf.popularity]
+                [perf.performanceid, perf.festivalid, perf.starttime, perf.endtime, perf.popularity]
             );
         }
         console.log('Inserted data into performanceWithPopularity table');
@@ -109,7 +116,7 @@ async function initializeDatabase() {
                 `INSERT INTO "performanceWithPopularityAdvanced" 
                  ("performanceId", "festivalId", "startTimeDate", "endTimeDate", "popularity")
                  VALUES ($1, $2, $3, $4, $5)`,
-                [perf.performanceId, perf.festivalId, perf.startTime, perf.endTime, perf.popularity]
+                [perf.performanceid, perf.festivalid, perf.startTimeDate, perf.endTimeDate, perf.popularity]
             );
         }
         console.log('Inserted data into performanceWithPopularityAdvanced table');
