@@ -6,7 +6,7 @@ const advancedDataQuery = {
     pageSize: 5
 }
 
-
+let advancedResultQuery = {}; // or appropriate initial value
 const advancedDataPaginationFunction = {
     gotoFirstPage: function () {
         advancedDataQuery["page"] = 0;
@@ -185,3 +185,4 @@ $(document).ready(function () {
     registerAdvancedResultInput();
     refreshAdvancedDataTable();
 })
+
