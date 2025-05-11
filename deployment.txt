@@ -1,6 +1,0 @@
-# Backend Deployment (Render)
-# The backend is automatically deployed when changes are pushed to the main branch
-# Manual deployment can be triggered from the Render dashboard
-
-# Frontend Deployment (GitHub Pages)
-git subtree push -P frontend origin gh-pages

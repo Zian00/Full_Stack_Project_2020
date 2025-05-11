@@ -1,19 +1,29 @@
-# Names:
-`Zheng Mian`
+# Frontend
 
-To run in local:
-For backend, go into backend folder and run `npm run start`
-For frontend, go into frontend folder and run `npm start`
+## Requirements
 
-## Project Description:
+1. Basic/Advance Data viewer
+    1. Pagination
+        1. First page
+        2. Next page
+        3. Page size
+    2. Filtering
+        1. 2 input
+2. Basic/Advance Result viewer
+    1. Input fields for computation parameters
 
-- Music Festival which allows user to conduct performance selection by filtering the festival_id, start time and end time.
+## Notes
 
-- Frontend (jQuery, HTML, CSS, JS, Bootstrap)
+-   Refer to individual problem statements for the filtering input and computation parameters.
+-   You may choose to use reactjs/bootstrap/jquery to help with your development.
+-   You should not be connecting to any persistent data storage unless for caching.
 
-- Backend (JS)
+## Sample wireframes
 
-- database (PostgreSQL)
+![sample-wireframe-data-viewer](../assets/sample-wireframe-data-viewer-frontend.png)
 
-- algorithm used (Binary Search)
+###### Data Viewer
 
+![sample-wireframe-result-viewer](../assets/sample-wireframe-result-viewer-frontend.png)
+
+###### Result Viewer
