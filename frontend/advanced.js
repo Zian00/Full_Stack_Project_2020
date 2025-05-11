@@ -6,7 +6,9 @@ const advancedDataQuery = {
     pageSize: 5
 }
 
-let advancedResultQuery = {}; // or appropriate initial value
+let advancedResultQuery = {
+    festivalId: null
+}; // Initialize with required property
 const advancedDataPaginationFunction = {
     gotoFirstPage: function () {
         advancedDataQuery["page"] = 0;
@@ -166,6 +168,11 @@ function refreshAdvancedResultTable() {
 }
 
 function computeAdvancedResult() {
+    // Reset the query object with default values
+    advancedResultQuery = {
+        festivalId: null
+    };
+    
     $("#advanced-result-input-form input")
         .not(":input[type=submit]")
         .each((_, input) => {
