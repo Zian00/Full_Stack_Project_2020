@@ -37,7 +37,9 @@ const basicResultUrl = `${CONFIG.API_BASE_URL}/basic/result`;
 // printing the data in html
 function populateDataBasicTable(data) {
     console.log(data);
-    const dataTableHtml = data.map(({ performanceId, festivalId, startTime, endTime }) => `
+    // Skip the first element which contains metadata
+    const actualData = data.slice(1);
+    const dataTableHtml = actualData.map(({ performanceId, festivalId, startTime, endTime }) => `
                     <tr>
                         <th scope="row">${performanceId}</th>
                         <td>${festivalId}</td>
